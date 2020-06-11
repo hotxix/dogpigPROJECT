@@ -282,12 +282,14 @@ def init():
 	#basicSetting[6] = int('597781866681991198') #보이스채널ID
 	#basicSetting[7] = int('597782016607649829') #택스트채널ID
 	
-	bossNum = int(len(boss_inputData)/5)
+	#bossNum = int(len(boss_inputData)/5)
+	bossNum = int(len(boss_inputData)/6)
 
 	fixed_bossNum = int(len(fixed_inputData)/6) 
 	
 	for i in range(bossNum):
-		tmp_bossData.append(boss_inputData[i*5:i*5+5])
+		#tmp_bossData.append(boss_inputData[i*5:i*5+5])
+		tmp_bossData.append(boss_inputData[i*6:i*6+6])
 
 	for i in range(fixed_bossNum):
 		tmp_fixed_bossData.append(fixed_inputData[i*6:i*6+6]) 
@@ -311,7 +313,8 @@ def init():
 		f.append(tmp_bossData[j][3][20:])         #bossData[3] : 분전 알림멘트
 		f.append(tmp_bossData[j][4][13:])         #bossData[4] : 젠 알림멘트
 		f.append(tmp_bossData[j][1][tmp_len+1:])  #bossData[5] : 분
-		f.append('')                              #bossData[6] : 메세지
+		f.append(tmp_bossData[j][5][8:])          #bossData[6] : 그룹
+		f.append('')                              #bossData[7] : 메세지
 		bossData.append(f)
 		f = []
 		bossTime.append(datetime.datetime.now()+datetime.timedelta(days=365, hours = int(basicSetting[0])))
@@ -780,7 +783,8 @@ async def dbLoad():
 						tmp_bossTimeString[j] = bossTimeString[j] = bossTime[j].strftime('%H:%M:%S')
 						tmp_bossDateString[j] = bossDateString[j] = bossTime[j].strftime('%Y-%m-%d')
 						
-					bossData[j][6] = beforeBossData[i+1][tmp_msglen+2:len(beforeBossData[i+1])]
+					#bossData[j][6] = beforeBossData[i+1][tmp_msglen+2:len(beforeBossData[i+1])]
+					bossData[j][7] = beforeBossData[i+1][tmp_msglen+2:len(beforeBossData[i+1])]
 
 					if beforeBossData[i+1][tmp_msglen-4:tmp_msglen-3] != 0 and beforeBossData[i+1][tmp_msglen-5:tmp_msglen-4] == ' ':
 						bossMungCnt[j] = int(beforeBossData[i+1][tmp_msglen-4:tmp_msglen-3]) + tmp_mungcnt
@@ -1839,11 +1843,13 @@ while True:
 					if bossMungFlag[i] == True :
 						aa.append(tmp_bossTime[i])                       #output_bossData[1] : 시간
 						aa.append(tmp_bossTime[i].strftime('%H:%M:%S'))  #output_bossData[2] : 시간(00:00:00) -> 초빼기 : aa.append(tmp_bossTime[i].strftime('%H:%M'))  
-						aa.append('-')	                                 #output_bossData[3] : -
+						#aa.append('-')	                                 #output_bossData[3] : -
+						aa.append(bossData[i][6])		         #output_bossData[3] : 그룹
 					else :
 						aa.append(bossTime[i])                           #output_bossData[1] : 시간
 						aa.append(bossTime[i].strftime('%H:%M:%S'))      #output_bossData[2] : 시간(00:00:00) -> 초빼기 : aa.append(bossTime[i].strftime('%H:%M'))  
-						aa.append('+')	                                 #output_bossData[3] : +
+						#aa.append('+')	                                 #output_bossData[3] : +
+						aa.append(bossData[i][6])		         #output_bossData[3] : 그룹
 					aa.append(bossData[i][2])                            #output_bossData[4] : 멍/미입력 보스
 					aa.append(bossMungCnt[i])	                         #output_bossData[5] : 멍/미입력횟수
 					aa.append(bossData[i][6])	                         #output_bossData[6] : 메세지
@@ -1999,11 +2005,13 @@ while True:
 					if bossMungFlag[i] == True :
 						aa.append(tmp_bossTime[i])                       #output_bossData[1] : 시간
 						aa.append(tmp_bossTime[i].strftime('%H:%M:%S'))  #output_bossData[2] : 시간(00:00:00) -> 초빼기 : aa.append(tmp_bossTime[i].strftime('%H:%M'))
-						aa.append('-')	                                 #output_bossData[3] : -
+						#aa.append('-')	                                 #output_bossData[3] : -
+						aa.append(bossData[i][6])                        #output_bossData[3] : 그룹
 					else :
 						aa.append(bossTime[i])                           #output_bossData[1] : 시간
 						aa.append(bossTime[i].strftime('%H:%M:%S'))      #output_bossData[2] : 시간(00:00:00) -> 초빼기 : aa.append(bossTime[i].strftime('%H:%M'))
-						aa.append('+')	                                 #output_bossData[3] : +
+						#aa.append('+')	                                 #output_bossData[3] : +
+						aa.append(bossData[i][6])                        #output_bossData[3] : 그룹
 					aa.append(bossData[i][2])                            #output_bossData[4] : 멍/미입력 보스
 					aa.append(bossMungCnt[i])	                         #output_bossData[5] : 멍/미입력횟수
 					aa.append(bossData[i][6])	                         #output_bossData[6] : 메세지
