@@ -2555,7 +2555,7 @@ while True:
 						else:
 							bossData[i][7] = ''
 							
-						tmp_msg = bossData[i][7] +'컷'
+						tmp_msg = bossData[i][0] +'컷'
 						if len(hello) > len(tmp_msg) + 3 :
 							if hello.find(':') != -1 :
 								chkpos = hello.find(':')
